@@ -1,0 +1,11 @@
+fill_countries.sql
+fill_seasons.sql
+fill_types_of_teams.sql
+fill_tournaments.sql
+fill_tournaments_seasons.sql
+fill_players.sql
+fill_managers.sql
+fill_teams.sql
+fill_players_teams.sql
+fill_tournaments_seasons_teams.sql
+fill_players_teams.sql
