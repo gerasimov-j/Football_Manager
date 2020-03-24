@@ -18,34 +18,30 @@ public class DatabaseCreator {
         System.getProperty("user.dir") + "/src/main/resources/mySQL/insert/";
     private static final String INSERT_INTO_TABLES_ORDER_PATH = INSERT_INTO_TABLES_PATH + "insert_order.txt";
     private static final Logger LOGGER = Logger.getLogger(DatabaseCreator.class);
+    private static ConnectionManager connectionManager = new ConnectionManagerJDBC();
+    private Statement statement;
 
     public void createTables() {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            Statement statement = connection.createStatement();
-            String queriesInLine = getCreationQueryFromFile();
-            String[] queries = queriesInLine.split(";");
-            for (String query : queries) {
-                executeUpdate(statement, query);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executeUpdate(getCreationQueryFromFile());
     }
 
     public void insertIntoTables() {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            Statement statement = connection.createStatement();
-            String queriesInLine = getInsertQueryFromFile();
-            String[] queries = queriesInLine.split(";");
+        executeUpdate(getInsertQueryFromFile());
+    }
+
+    private void executeUpdate(String queriesLine) {
+        try (Connection connection = connectionManager.getConnection()) {
+            statement = connection.createStatement();
+            String[] queries = queriesLine.split(";");
             for (String query : queries) {
-                executeUpdate(statement, query);
+                executeUpdateWithLog(query);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void executeUpdate(Statement statement, String query) {
+    private void executeUpdateWithLog(String query) {
         try {
             LOGGER.info(query);
             statement.executeUpdate(query);
