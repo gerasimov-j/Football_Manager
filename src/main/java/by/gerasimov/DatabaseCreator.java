@@ -12,7 +12,7 @@ public class DatabaseCreator {
     private Statement statement;
 
     public DatabaseCreator() {
-        connectionManager = new ConnectionManagerJDBC();
+        connectionManager = new ConnectionManager();
     }
 
     public DatabaseCreator(ConnectionManager manager) {
