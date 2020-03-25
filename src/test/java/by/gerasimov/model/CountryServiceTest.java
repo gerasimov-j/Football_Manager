@@ -1,13 +1,27 @@
 package by.gerasimov.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CountryServiceTest {
 
-    CountryService service = new CountryService();
+    private CountryService service;
+
+    @Before
+    public void init() {
+        service = new CountryService();
+        service.begin();
+    }
+
+    @After
+    public void close() {
+        service.end();
+    }
 
     @Test
     public void add() {
@@ -50,7 +64,7 @@ public class CountryServiceTest {
         country1.setTagName("LAT");
         service.add(country1);
         List<Country> countries = service.getAll();
-        for(Country c : countries) {
+        for (Country c : countries) {
             System.out.println(c);
         }
     }
