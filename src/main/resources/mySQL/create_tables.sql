@@ -1,5 +1,3 @@
-use football_manager;
-
 drop table matches;
 drop table players_teams;
 drop table tournaments_seasons_teams;
