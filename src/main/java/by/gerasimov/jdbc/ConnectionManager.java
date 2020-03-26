@@ -1,4 +1,4 @@
-package by.gerasimov;
+package by.gerasimov.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

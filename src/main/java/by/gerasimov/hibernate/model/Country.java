@@ -1,4 +1,4 @@
-package by.gerasimov.model;
+package by.gerasimov.hibernate.model;
 
 import java.util.Objects;
 import javax.persistence.Column;
@@ -19,10 +19,10 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "tag_name", length = 3)
+    @Column(name = "tag_name", nullable = false, length = 3)
     private String tagName;
 
     public Country() {
@@ -72,13 +72,12 @@ public class Country {
             return false;
         }
         Country country = (Country) o;
-        return id == country.id &&
-            Objects.equals(name, country.name) &&
-            Objects.equals(tagName, country.tagName);
+        return name.equals(country.name) &&
+            tagName.equals(country.tagName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, tagName);
+        return Objects.hash(name, tagName);
     }
 }
