@@ -1,4 +1,5 @@
 fill_countries.sql
+fill_stadiums.sql
 fill_seasons.sql
 fill_types_of_teams.sql
 fill_tournaments.sql

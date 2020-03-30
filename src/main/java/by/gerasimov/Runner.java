@@ -5,6 +5,7 @@ import by.gerasimov.utils.DatabaseCreator;
 public class Runner {
 
     public static void main(String[] args) {
+        createDB();
     }
 
     private static void createDB() {

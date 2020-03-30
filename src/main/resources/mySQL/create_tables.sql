@@ -8,6 +8,7 @@ drop table tournaments_seasons;
 drop table tournaments;
 drop table types_of_teams;
 drop table seasons;
+drop table stadiums;
 drop table countries;
 
 create table countries (
@@ -15,6 +16,14 @@ create table countries (
   name varchar(50) not null,
   tag_name varchar(3) not null,
   primary key (id)
+);
+
+create table stadiums (
+  id int not null auto_increment,
+  name varchar(50) not null,
+  country_id int not null,
+  primary key (id),
+  foreign key (country_id) references countries (id)
 );
 
 create table seasons (
@@ -110,9 +119,11 @@ create table matches (
   home_team_goals int,
   guest_team_goals int,
   date_time date not null,
+  stadium_id int,
   foreign key (home_team_id) references teams (id),
   foreign key (guest_team_id) references teams (id),
   foreign key (tournament_id) references tournaments (id),
+  foreign key (stadium_id) references stadiums (id),
   constraint positiveGoals check (
     (home_team_goals is null or home_team_goals >= 0) and
     (guest_team_goals is null or guest_team_goals >= 0)
