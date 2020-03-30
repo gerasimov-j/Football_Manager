@@ -34,7 +34,7 @@ public class DatabaseCreator {
             for (String query : queries) {
                 executeUpdateWithLog(query);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

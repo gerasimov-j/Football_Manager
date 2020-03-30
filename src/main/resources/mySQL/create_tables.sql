@@ -86,6 +86,7 @@ create table tournaments_seasons (
   tournament_id int not null,
   season_id int not null,
   primary key (id),
+  index tournament_season_id (tournament_id, season_id),
   foreign key (tournament_id) references tournaments (id),
   foreign key (season_id) references seasons (id)
 );

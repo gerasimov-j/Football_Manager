@@ -1,12 +1,15 @@
 package by.gerasimov.hibernate.model;
 
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +28,12 @@ public class Country {
     @Column(name = "tag_name", nullable = false, length = 3)
     private String tagName;
 
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+    private Set<Stadium> stadiums;
+
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+    private Set<Player> players;
+
     public Country() {
     }
 
@@ -32,6 +41,29 @@ public class Country {
         this.id = id;
         this.name = name;
         this.tagName = tagName;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + tagName + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Country)) {
+            return false;
+        }
+        Country country = (Country) o;
+        return name.equals(country.name) &&
+            tagName.equals(country.tagName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, tagName);
     }
 
     public long getId() {
@@ -58,26 +90,11 @@ public class Country {
         this.tagName = tagName;
     }
 
-    @Override
-    public String toString() {
-        return name + " (" + tagName + ")";
+    public Set<Stadium> getStadiums() {
+        return stadiums;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Country)) {
-            return false;
-        }
-        Country country = (Country) o;
-        return name.equals(country.name) &&
-            tagName.equals(country.tagName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, tagName);
+    public void setStadiums(Set<Stadium> stadiums) {
+        this.stadiums = stadiums;
     }
 }
