@@ -1,4 +1,4 @@
-package by.gerasimov.jdbc;
+package by.gerasimov.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

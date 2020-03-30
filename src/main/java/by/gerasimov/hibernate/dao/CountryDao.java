@@ -1,12 +1,12 @@
 package by.gerasimov.hibernate.dao;
 
-import by.gerasimov.hibernate.HibernateUtil;
+import by.gerasimov.utils.HibernateUtil;
 import by.gerasimov.hibernate.model.Country;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class CountryDao {
+public class CountryDao extends Dao {
 
     public void save(Country country) {
         Transaction transaction = null;

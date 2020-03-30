@@ -1,4 +1,4 @@
-package by.gerasimov.hibernate;
+package by.gerasimov.utils;
 
 import by.gerasimov.hibernate.model.Country;
 import java.util.HashMap;

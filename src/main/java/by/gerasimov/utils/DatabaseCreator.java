@@ -1,4 +1,4 @@
-package by.gerasimov.jdbc;
+package by.gerasimov.utils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
