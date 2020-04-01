@@ -1,0 +1,25 @@
+<html>
+
+<body>
+<div>
+	<form method="post">
+		<input type="text" name="name" placeholder="Введите страну">
+		<input type="text" name="tag" placeholder="И тег">
+		<button type="submit">Добавить</button>
+	</form>
+</div>
+<div>Список стран</div>
+<form method="post" action="filter">
+	<input type="text" name="filter">
+	<button type="submit">Найти</button>
+</form>
+{{#countries}}
+	<div>
+		<b>{{id}}</b>
+		<span>{{name}}</span>
+		<i>{{tagName}}</i>
+	</div>
+{{/countries}}
+</body>
+
+</html>
