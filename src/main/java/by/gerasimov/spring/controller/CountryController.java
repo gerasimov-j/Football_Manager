@@ -1,9 +1,11 @@
 package by.gerasimov.spring.controller;
 
 import by.gerasimov.spring.model.Country;
+import by.gerasimov.spring.model.User;
 import by.gerasimov.spring.repository.CountryRepository;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,11 @@ public class CountryController {
     }
 
     @PostMapping("/countries")
-    public String add(@RequestParam String name, @RequestParam String tag, Map<String, Object> model) {
-        Country country = new Country(name, tag);
+    public String add(
+        @AuthenticationPrincipal User user, @RequestParam String name, @RequestParam String tag,
+        Map<String, Object> model
+    ) {
+        Country country = new Country(name, tag, user);
         countryRepository.save(country);
         model.put("countries", countryRepository.findAll());
         return "countries";

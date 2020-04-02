@@ -5,9 +5,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,6 +37,22 @@ public class Country {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private Set<Player> players;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "-";
+    }
+
     public Country() {
     }
 
@@ -42,12 +61,11 @@ public class Country {
         this.tagName = tagName;
     }
 
-    public Country(long id, String name, String tagName) {
-        this.id = id;
+    public Country(String name, String tagName, User user) {
         this.name = name;
         this.tagName = tagName;
+        this.author = user;
     }
-
     @Override
     public String toString() {
         return name + " (" + tagName + ")";
@@ -101,5 +119,13 @@ public class Country {
 
     public void setStadiums(Set<Stadium> stadiums) {
         this.stadiums = stadiums;
+    }
+
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }

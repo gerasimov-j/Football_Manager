@@ -1,6 +1,6 @@
 package by.gerasimov.spring.config;
 
-import javax.sql.DataSource;
+import by.gerasimov.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,11 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .passwordEncoder(NoOpPasswordEncoder.getInstance())
-            .usersByUsernameQuery("select username, password, active from usr where username=?")
-            .authoritiesByUsernameQuery(
-                "select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
+        auth.userDetailsService(userService)
+            .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }
