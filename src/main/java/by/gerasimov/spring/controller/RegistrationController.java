@@ -1,4 +1,4 @@
-package by.gerasimov.spring.controllers;
+package by.gerasimov.spring.controller;
 
 import by.gerasimov.spring.model.Role;
 import by.gerasimov.spring.model.User;

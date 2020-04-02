@@ -1,4 +1,4 @@
-package by.gerasimov.spring.controllers;
+package by.gerasimov.spring.controller;
 
 import by.gerasimov.spring.model.Country;
 import by.gerasimov.spring.repository.CountryRepository;
