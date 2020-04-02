@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CountryController {
 
     @Autowired
-    private CountryRepository repository;
+    private CountryRepository countryRepository;
 
-    @GetMapping
+    @GetMapping("/countries")
     public String main(Map<String, Object> model) {
-        model.put("countries", repository.findAll());
-        return "main";
+        model.put("countries", countryRepository.findAll());
+        return "countries";
     }
 
-    @PostMapping
+    @PostMapping("/countries")
     public String add(@RequestParam String name, @RequestParam String tag, Map<String, Object> model) {
         Country country = new Country(name, tag);
-        repository.save(country);
-        model.put("countries", repository.findAll());
-        return "main";
+        countryRepository.save(country);
+        model.put("countries", countryRepository.findAll());
+        return "countries";
     }
 
-    @PostMapping("filter")
+    @PostMapping("/filter")
     public String filter(@RequestParam String filter, Map<String, Object> model) {
-        if (filter == null || filter.isEmpty()) {
-            model.put("countries", repository.findByNameContaining(filter));
+        if (filter != null && !filter.isEmpty()) {
+            model.put("countries", countryRepository.findByNameContaining(filter));
         } else {
-            model.put("countries", repository.findAll());
+            model.put("countries", countryRepository.findAll());
         }
-        return "main";
+        return "countries";
     }
 }

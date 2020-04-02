@@ -1,25 +1,19 @@
+<!DOCTYPE HTML>
 <html>
-
+<head>
+	<title>FM | Main</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
 <body>
 <div>
-	<form method="post">
-		<input type="text" name="name" placeholder="Введите страну">
-		<input type="text" name="tag" placeholder="И тег">
-		<button type="submit">Добавить</button>
+	<form action="/logout" method="post">
+		<input type="submit" value="Sing out"/>
+		<input type="hidden" name="_csrf" value="{{_csrf.token}}">
 	</form>
 </div>
-<div>Список стран</div>
-<form method="post" action="filter">
-	<input type="text" name="filter">
-	<button type="submit">Найти</button>
-</form>
-{{#countries}}
-	<div>
-		<b>{{id}}</b>
-		<span>{{name}}</span>
-		<i>{{tagName}}</i>
-	</div>
-{{/countries}}
+<div>Greeting! Hello, {{username}}!</div>
+<div>
+	To see countries click <a href="/countries">here</a>
+</div>
 </body>
-
 </html>
