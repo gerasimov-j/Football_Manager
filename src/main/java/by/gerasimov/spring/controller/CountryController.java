@@ -36,7 +36,6 @@ public class CountryController {
         Map<String, Object> model) {
         Country country = new Country(name, tag, user);
         countryRepository.save(country);
-        model.put("countries", countryRepository.findAll());
-        return "countries";
+        return "redirect:/countries";
     }
 }
