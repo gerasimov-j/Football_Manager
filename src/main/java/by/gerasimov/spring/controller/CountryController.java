@@ -18,29 +18,25 @@ public class CountryController {
     private CountryRepository countryRepository;
 
     @GetMapping("/countries")
-    public String main(Map<String, Object> model) {
-        model.put("countries", countryRepository.findAll());
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Map<String, Object> model) {
+        Iterable<Country> countries;
+        if (filter != null && !filter.isEmpty()) {
+            countries = countryRepository.findByNameContaining(filter);
+        } else {
+            countries = countryRepository.findAll();
+        }
+        model.put("countries", countries);
+        model.put("filter", filter);
         return "countries";
     }
 
     @PostMapping("/countries")
     public String add(
         @AuthenticationPrincipal User user, @RequestParam String name, @RequestParam String tag,
-        Map<String, Object> model
-    ) {
+        Map<String, Object> model) {
         Country country = new Country(name, tag, user);
         countryRepository.save(country);
         model.put("countries", countryRepository.findAll());
-        return "countries";
-    }
-
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        if (filter != null && !filter.isEmpty()) {
-            model.put("countries", countryRepository.findByNameContaining(filter));
-        } else {
-            model.put("countries", countryRepository.findAll());
-        }
         return "countries";
     }
 }
