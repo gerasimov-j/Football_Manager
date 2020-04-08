@@ -41,6 +41,8 @@ public class Country {
     @JoinColumn(name = "user_id")
     private User author;
 
+    private String flagFileName;
+
     public User getAuthor() {
         return author;
     }
@@ -127,5 +129,13 @@ public class Country {
 
     public void setPlayers(Set<Player> players) {
         this.players = players;
+    }
+
+    public String getFlagFileName() {
+        return flagFileName;
+    }
+
+    public void setFlagFileName(String flagFileName) {
+        this.flagFileName = flagFileName;
     }
 }
