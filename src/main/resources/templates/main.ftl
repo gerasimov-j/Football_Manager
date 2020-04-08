@@ -4,6 +4,7 @@
 <@c.page "Main">
 <div>
     <@l.logout />
+    <span><a href="/user">User list</a></span>
 </div>
 <div>Main! Hello, ${username}!</div>
 <div>
