@@ -25,6 +25,9 @@ public class CountryController {
     @Value("${upload.path}")
     private String uploadPath;
 
+    @Value("${country.flags}")
+    private String countryFlags;
+
     @GetMapping("/countries")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Country> countries;
@@ -47,7 +50,7 @@ public class CountryController {
         if (file != null && makeDirExists()) {
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(uploadPath + "/country/flags/" + resultFileName));
+            file.transferTo(new File(uploadPath + countryFlags + "/" + resultFileName));
             country.setFlagFileName(resultFileName);
         }
         countryRepository.save(country);
@@ -55,7 +58,7 @@ public class CountryController {
     }
 
     private boolean makeDirExists() {
-        File uploadDir = new File(uploadPath + "/country/flags/");
+        File uploadDir = new File(uploadPath + countryFlags);
         if (!uploadDir.exists()) {
             return uploadDir.mkdirs();
         }
