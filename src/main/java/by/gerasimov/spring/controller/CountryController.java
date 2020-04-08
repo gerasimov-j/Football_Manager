@@ -47,7 +47,7 @@ public class CountryController {
         if (file != null && makeDirExists()) {
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            file.transferTo(new File(uploadPath + "/country/flags/" + resultFileName));
             country.setFlagFileName(resultFileName);
         }
         countryRepository.save(country);
@@ -55,9 +55,9 @@ public class CountryController {
     }
 
     private boolean makeDirExists() {
-        File uploadDir = new File(uploadPath);
+        File uploadDir = new File(uploadPath + "/country/flags/");
         if (!uploadDir.exists()) {
-            return uploadDir.mkdir();
+            return uploadDir.mkdirs();
         }
         return true;
     }

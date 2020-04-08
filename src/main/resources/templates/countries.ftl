@@ -23,7 +23,7 @@
     <i>${country.tagName}</i>
     <strong>${country.authorName}</strong>
     <#if country.flagFileName??>
-        <img src="/img/${country.flagFileName}" height="10" width="15">
+        <img src="/countryFlags/${country.flagFileName}" height="10" width="15">
     </#if>
 </div>
 <#else>
