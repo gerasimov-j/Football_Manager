@@ -1,32 +1,51 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 
 <@c.page "Countries">
-<div>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Введите страну" />
-        <input type="text" name="tag" placeholder="И тег">
-        <input type="file" name="file">
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <button type="submit">Добавить</button>
-    </form>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <form method="get" action="/countries" class="form-inline">
+            <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Filter by name">
+            <button type="submit" class="btn btn-primary ml-2">Filter</button>
+        </form>
+    </div>
 </div>
-<div>Список стран</div>
-<form method="get" action="/countries">
-    <input type="text" name="filter" value="${filter?ifExists}">
-    <button type="submit">Найти</button>
-</form>
+<a class="btn btn-primary" data-toggle="collapse" href="#addCountry" role="button" aria-expanded="false" aria-controls="addCountry">
+    Add new country
+</a>
+<div class="collapse" id="addCountry">
+    <div class="form-group mt-3">
+	    <form method="post" enctype="multipart/form-data">
+	        <div class="form-group">
+	            <input type="text" class="form-control" name="name" placeholder="Enter name" />
+	        </div>
+	        <div class="form-group">
+	            <input type="text" class="form-control" name="tag" placeholder="And tag">
+	        </div>
+	        <div class="form-group">
+	            <div class="custom-file">
+	                <input type="file" name="file" id="customFile">
+	                <label class="custom-file-label" for="customFile">Choose file</label>
+	            </div>
+            </div>
+	        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+            <div class="form-group">
+	            <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+	    </form>
+    </div>
+</div>
+
+<div class="card-columns">
 <#list countries as country>
-<div>
-    <b>${country.id}</b>
-    <span>${country.name}</span>
-    <i>${country.tagName}</i>
-    <strong>${country.authorName}</strong>
-    <#if country.flagFileName??>
-        <img src="/countryFlags/${country.flagFileName}" height="10" width="15">
-    </#if>
+    <div class="card m-2 h-100">
+	    <#if country.flagFileName??>
+	        <img src="/countryFlags/${country.flagFileName}" height="10" width="15" class=".img-thumbnail">
+	    </#if>
+	    <span>${country.name} (<i>${country.tagName}</i>)</span>
+	    <i></i>
+    </div>
+	<#else>
+	No countries
+	</#list>
 </div>
-<#else>
-No countries
-</#list>
 </@c.page>

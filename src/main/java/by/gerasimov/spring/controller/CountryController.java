@@ -5,6 +5,7 @@ import by.gerasimov.spring.model.User;
 import by.gerasimov.spring.repository.CountryRepository;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,9 +33,9 @@ public class CountryController {
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Country> countries;
         if (filter != null && !filter.isEmpty()) {
-            countries = countryRepository.findByNameContaining(filter);
+            countries = countryRepository.findByNameContainingOrderByName(filter);
         } else {
-            countries = countryRepository.findAll();
+            countries = countryRepository.findAllByOrderByNameAscTagNameAsc();
         }
         model.addAttribute("countries", countries);
         model.addAttribute("filter", filter);
@@ -47,7 +48,7 @@ public class CountryController {
         @RequestParam("file") MultipartFile file
     ) throws IOException {
         Country country = new Country(name, tag, user);
-        if (file != null && makeDirExists()) {
+        if (file != null && !Objects.equals(file.getOriginalFilename(), "") && makeDirExists()) {
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + countryFlags + "/" + resultFileName));
