@@ -9,7 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "stadiums")
 public class Stadium {
@@ -29,10 +31,6 @@ public class Stadium {
     @Override
     public String toString() {
         return name + " (" + getCountry().getTagName() + ")";
-    }
-
-    public Country getCountry() {
-        return country;
     }
 
     @Override

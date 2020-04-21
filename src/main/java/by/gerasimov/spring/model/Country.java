@@ -14,7 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "countries")
 @NamedQuery(name = "Country.getAll", query = "SELECT c from Country c")
@@ -31,6 +33,8 @@ public class Country {
     @Column(name = "tag_name", nullable = false, length = 3)
     private String tagName;
 
+    private String flagFileName;
+
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private Set<Stadium> stadiums;
 
@@ -40,20 +44,6 @@ public class Country {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
-
-    private String flagFileName;
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public String getAuthorName() {
-        return author != null ? author.getUsername() : "-";
-    }
 
     public Country() {
     }
@@ -68,6 +58,11 @@ public class Country {
         this.tagName = tagName;
         this.author = user;
     }
+
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "-";
+    }
+
     @Override
     public String toString() {
         return name + " (" + tagName + ")";
@@ -89,53 +84,5 @@ public class Country {
     @Override
     public int hashCode() {
         return Objects.hash(name, tagName);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTagName() {
-        return tagName;
-    }
-
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
-
-    public Set<Stadium> getStadiums() {
-        return stadiums;
-    }
-
-    public void setStadiums(Set<Stadium> stadiums) {
-        this.stadiums = stadiums;
-    }
-
-    public Set<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Set<Player> players) {
-        this.players = players;
-    }
-
-    public String getFlagFileName() {
-        return flagFileName;
-    }
-
-    public void setFlagFileName(String flagFileName) {
-        this.flagFileName = flagFileName;
     }
 }
